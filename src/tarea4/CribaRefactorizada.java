@@ -3,6 +3,14 @@ package tarea4;
 import java.util.Scanner;
 public class CribaRefactorizada {
 
+    private int i;
+    private int j;
+    
+    public CribaRefactorizada(int i, int j) {
+        this.i = i;
+        this.j = j;
+    }
+
     // Generar números primos de 1 a max
     public static int[] generarPrimos (int max)
     {
@@ -33,26 +41,20 @@ public class CribaRefactorizada {
         }
     }
 
-    private static int[] rellenarVectorConNumerosPrimos(int cuenta, int tamanyoArray, boolean[] esPrimo) {
+    private static void inicializarArray(int tamanyoArray, boolean[] esPrimo) {
         int i;
-        int j;
-        int[] primos = new int[cuenta];
-
-        for (i=0, j=0; i< tamanyoArray; i++) {
-            if (esPrimo[i])
-                primos[j++] = i;
-        }
-        return primos;
+        for (i=0; i< tamanyoArray; i++)
+            esPrimo[i] = true;
     }
 
-    private static int cuantosPrimos(int tamanyoArray, boolean[] esPrimo) {
-        int i;
-        int cuenta = 0;
-        for (i=0; i< tamanyoArray; i++) {
-            if (esPrimo[i])
-                cuenta++;
-        }
-        return cuenta;
+      private static void elimina0y1QueNoSonPrimos(boolean[] esPrimo) {
+        esPrimo[0] = esPrimo[1] = false;
+    }
+
+     private static void eliminarMultiplosDei(int tamanyoArray, boolean[] esPrimo, int i) {
+        int j;
+        for (j=2* i; j< tamanyoArray; j+= i)
+            esPrimo[j] = false;
     }
 
     private static void criba(int tamanyoArray, boolean[] esPrimo) {
@@ -66,20 +68,26 @@ public class CribaRefactorizada {
         }
     }
 
-    private static void eliminarMultiplosDei(int tamanyoArray, boolean[] esPrimo, int i) {
-        int j;
-        for (j=2* i; j< tamanyoArray; j+= i)
-            esPrimo[j] = false;
-    }
-
-    private static void elimina0y1QueNoSonPrimos(boolean[] esPrimo) {
-        esPrimo[0] = esPrimo[1] = false;
-    }
-
-    private static void inicializarArray(int tamanyoArray, boolean[] esPrimo) {
+    private static int cuantosPrimos(int tamanyoArray, boolean[] esPrimo) {
         int i;
-        for (i=0; i< tamanyoArray; i++)
-            esPrimo[i] = true;
+        int cuenta = 0;
+        for (i=0; i< tamanyoArray; i++) {
+            if (esPrimo[i])
+                cuenta++;
+        }
+        return cuenta;
+    }
+
+     private static int[] rellenarVectorConNumerosPrimos(int cuenta, int tamanyoArray, boolean[] esPrimo) {
+        int i;
+        int j;
+        int[] primos = new int[cuenta];
+
+        for (i=0, j=0; i< tamanyoArray; i++) {
+            if (esPrimo[i])
+                primos[j++] = i;
+        }
+        return primos;
     }
 
     public static void main(String[] args) {
